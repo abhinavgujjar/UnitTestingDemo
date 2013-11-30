@@ -40,6 +40,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CompanyTaxCalculator.cs" />
+    <Compile Include="DatabaseLogger.cs" />
+    <Compile Include="EFCalculator.cs" />
+    <Compile Include="ILogger.cs" />
     <Compile Include="IncomeTaxCalculator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

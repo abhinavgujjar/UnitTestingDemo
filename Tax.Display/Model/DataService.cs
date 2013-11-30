@@ -1,7 +1,9 @@
 ﻿using System;
+using System.ComponentModel.Composition;
 
 namespace Tax.Display.Model
 {
+    [Export]
     public class DataService : IDataService
     {
         public void GetData(Action<DataItem, Exception> callback)
@@ -10,6 +12,12 @@ namespace Tax.Display.Model
 
             var item = new DataItem("Welcome to MVVM Light");
             callback(item, null);
+        }
+
+
+        public decimal GetUDFForCity(string SelectedCity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

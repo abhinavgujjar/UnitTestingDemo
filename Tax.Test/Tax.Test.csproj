@@ -54,6 +54,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="CalculatorTest.cs" />
+    <Compile Include="TaxBusinessTest.cs" />
     <Compile Include="TaxDataAccessTest.cs" />
     <Compile Include="PersonTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

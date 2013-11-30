@@ -12,5 +12,11 @@ namespace Tax.Display.Design
             var item = new DataItem("Welcome to MVVM Light [design]");
             callback(item, null);
         }
+
+
+        public decimal GetUDFForCity(string SelectedCity)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

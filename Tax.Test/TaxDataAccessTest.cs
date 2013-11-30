@@ -4,6 +4,7 @@ using Tax.Entities;
 using Tax.DataAccess;
 using Moq;
 using System.Collections.Generic;
+using System.Data.Entity;
 
 namespace Tax.Test
 {
@@ -13,10 +14,12 @@ namespace Tax.Test
         [TestMethod]
         public void TestOnlyFemales()
         {
-            //var mock = new Mock<TaxDbContext>();
-            ////mock.Setup<DbSet< SlabRate>>( foo => foo.SlabRates).Returns(
+            var mock = new Mock<TaxDbContext>();
+            Mock.Setup<DbSet<SlabRate>>(foo => foo.SlabRates).Returns(
+                new DbSet<SlabRate>() { new SlabRate() });
+
             //Person person = new Person(DateTime.Now);
-            //Assert.AreEqual(0, person.Age);
+            Assert.AreEqual(0, person.Age);
         }
 
         [TestMethod]

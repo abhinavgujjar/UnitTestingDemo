@@ -8,5 +8,7 @@ namespace Tax.Display.Model
     public interface IDataService
     {
         void GetData(Action<DataItem, Exception> callback);
+
+        decimal GetUDFForCity(string SelectedCity);
     }
 }

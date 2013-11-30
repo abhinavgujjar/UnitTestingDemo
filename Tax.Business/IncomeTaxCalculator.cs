@@ -16,26 +16,39 @@ namespace Tax.Business
         public SeniorCitizenRebate Rebate { get; set; }
 
         ITaxDataAccess _dataAccess;
+        public ILogger Logger  { get; set; }
 
+        private List<SlabRate> getMaleSlabRates()
+        {
+            if (_maleSlabRates == null)
+            {
+                _maleSlabRates = _dataAccess.GetSlabRates(false);
+            }
+
+            return _maleSlabRates;
+        }
+        
         public IncomeTaxCalculator(ITaxDataAccess dataAccess)
         {
             _dataAccess = dataAccess;
+            _femaleSlabRates = _dataAccess.GetSlabRates(true);
+
         }
 
         public decimal CalculateTax(Person target)
         {
-            _femaleSlabRates = _dataAccess.GetSlabRates(true);
-            _maleSlabRates = _dataAccess.GetSlabRates(false);
-
+          
             var tax = 0.0M;
 
             if (target.isFemale)
             {
+
                 tax = calcFromSlabs(target, tax, _femaleSlabRates);
             }
             else
             {
-                tax = calcFromSlabs(target, tax, _maleSlabRates);
+                var slabRates = getMaleSlabRates();
+                tax = calcFromSlabs(target, tax, slabRates);
             }
 
             if ( Rebate !=null &&  target.Age > Rebate.AgeLimit)
@@ -50,6 +63,9 @@ namespace Tax.Business
         {
             foreach (var slab in applicableSlabs)
             {
+                if (slab.IsFemale != target.isFemale)
+                    throw new InvalidOperationException();
+
                 if (target.Income > slab.EndRange)
                 {
                     tax = tax + ((slab.EndRange - slab.StartRange) * slab.Rate / 100);
@@ -70,11 +86,15 @@ namespace Tax.Business
 
             foreach (var person in people)
             {
-                
                 tax = tax + CalculateTax(person);
             }
 
             return tax;
+        }
+
+        public decimal CalculateTotalIncome()
+        {
+            throw new NotImplementedException();
         }
     }
 }
